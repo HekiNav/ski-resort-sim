@@ -1,4 +1,4 @@
-class_name FreeLookCamera extends Camera3D
+class_name FreeLookCamera extends Area3D
 
 # Modifier keys' speed multiplier
 const SHIFT_MULTIPLIER = 2.5
@@ -27,6 +27,7 @@ var _q = false
 var _e = false
 var _shift = false
 var _alt = false
+
 
 func _input(event):
 	# Receives mouse motion
@@ -98,6 +99,10 @@ func _update_movement(delta):
 		_velocity.z = clamp(_velocity.z + offset.z, -_vel_multiplier, _vel_multiplier)
 	
 		translate(_velocity * delta * speed_multi)
+		if len(get_overlapping_areas()) != 0:
+			print("hfhfhjf")
+			translate(_velocity * delta * speed_multi)
+	
 
 # Updates mouse look 
 func _update_mouselook():
