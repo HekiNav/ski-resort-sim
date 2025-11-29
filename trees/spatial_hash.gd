@@ -4,8 +4,8 @@ extends Object
 var cell_size: float
 var cells := {}
 
-func _init(cell_size: float = 10.0):
-	self.cell_size = cell_size
+func _init(cell_size_new: float = 10.0):
+	cell_size = cell_size_new
 
 func get_cell_id(pos: Vector3) -> Vector3i:
 	return Vector3i(

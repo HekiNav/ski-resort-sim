@@ -75,6 +75,9 @@ func update_mesh():
 func _ready() -> void:
 	apply_mesh()
 
+func update_paths(paths):
+	mesh_instance.material_override.set_shader_parameter("paths",paths)
+
 func apply_mesh():
 	mesh_instance.mesh = array_mesh
 	

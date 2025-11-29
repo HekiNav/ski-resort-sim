@@ -1,5 +1,7 @@
 extends FreeLookCamera
 
+class_name SpectatorPlayer
+
 @onready var camera = %Camera3D
 @onready var ray = %RayCast3D
 
