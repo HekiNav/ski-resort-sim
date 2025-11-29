@@ -1,5 +1,10 @@
 @tool
-extends MeshInstance3D
+extends StaticBody3D
+class_name Terrain
+@onready var mesh_instance: MeshInstance3D = %MeshInstance3D
+@onready var collision_shape: CollisionShape3D = %CollisionShape3D
+
+var array_mesh
 
 @export var size := 64.0:
 	set(new_size):
@@ -60,7 +65,19 @@ func update_mesh():
 		tangent_arr[4*i] = tangent.x
 		tangent_arr[4*i+1] = tangent.y
 		tangent_arr[4*i+2] = tangent.z
-	var array_mesh = ArrayMesh.new()
+	array_mesh = ArrayMesh.new()
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, plane_arrays)
 	
-	mesh = array_mesh
+	
+	if mesh_instance:
+		apply_mesh()
+
+func _ready() -> void:
+	apply_mesh()
+
+func apply_mesh():
+	mesh_instance.mesh = array_mesh
+	
+	var collision_mesh = mesh_instance.mesh.create_trimesh_shape()
+	
+	collision_shape.shape = collision_mesh

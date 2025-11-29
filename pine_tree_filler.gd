@@ -9,12 +9,9 @@ var tree_positions = SpatialHash.new(8.0)
 
 @export_tool_button("Reload", "Reload") var reload_action = fill_pine_trees
 
-@export var terrain: MeshInstance3D:
+@export var terrain: Terrain:
 	set(new_terr):
 		terrain = new_terr
-		terrain.mesh.changed.connect(func():
-			fill_pine_trees()
-		)
 		fill_pine_trees()
 
 func place_tree_or_not_if_feeling_like_it():

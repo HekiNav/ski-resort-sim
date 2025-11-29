@@ -1,4 +1,7 @@
-class_name FreeLookCamera extends Area3D
+extends StaticBody3D
+
+class_name FreeLookCamera 
+
 
 # Modifier keys' speed multiplier
 const SHIFT_MULTIPLIER = 2.5
@@ -6,6 +9,8 @@ const ALT_MULTIPLIER = 1.0 / SHIFT_MULTIPLIER
 
 
 @export_range(0.0, 1.0) var sensitivity: float = 0.25
+
+var prev_pos = Vector3.ZERO
 
 # Mouse state
 var _mouse_position = Vector2(0.0, 0.0)
@@ -98,10 +103,9 @@ func _update_movement(delta):
 		_velocity.y = clamp(_velocity.y + offset.y, -_vel_multiplier, _vel_multiplier)
 		_velocity.z = clamp(_velocity.z + offset.z, -_vel_multiplier, _vel_multiplier)
 	
-		translate(_velocity * delta * speed_multi)
-		if len(get_overlapping_areas()) != 0:
-			print("hfhfhjf")
-			translate(_velocity * delta * speed_multi)
+		var vel_rotated = _velocity.rotated(Vector3(1,0,0),rotation.x).rotated(Vector3(0,1,0),rotation.y)
+	
+		move_and_collide(vel_rotated * delta * speed_multi)
 	
 
 # Updates mouse look 
