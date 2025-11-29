@@ -13,7 +13,6 @@ config_version=5
 config/name="Ski Resort Sim"
 run/main_scene="uid://ced2jrk1yjub8"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
 
 [editor_plugins]
 

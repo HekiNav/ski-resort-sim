@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btlgkcr7sru8l"]
+
+[ext_resource type="Script" uid="uid://xgsxhoaewasi" path="res://trees/pine_tree_filler.gd" id="1_7bwk8"]
+
+[node name="PineTreeFiller" type="Node3D"]
+script = ExtResource("1_7bwk8")

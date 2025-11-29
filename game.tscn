@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ced2jrk1yjub8"]
+[gd_scene load_steps=10 format=3 uid="uid://ced2jrk1yjub8"]
 
-[ext_resource type="PackedScene" uid="uid://ceu4i5mb70t0t" path="res://terrain.tscn" id="1_e2o6t"]
-[ext_resource type="PackedScene" uid="uid://bne0hr8frhqmg" path="res://spectator_player.tscn" id="3_fc0e3"]
-[ext_resource type="PackedScene" uid="uid://btlgkcr7sru8l" path="res://pine_tree_filler.tscn" id="3_feb5d"]
+[ext_resource type="PackedScene" uid="uid://ceu4i5mb70t0t" path="res://terrain/terrain.tscn" id="1_e2o6t"]
+[ext_resource type="Script" uid="uid://concelqgdcuex" path="res://game.gd" id="1_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://bne0hr8frhqmg" path="res://player/spectator_player.tscn" id="3_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://btlgkcr7sru8l" path="res://trees/pine_tree_filler.tscn" id="3_feb5d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e2o6t"]
 
@@ -18,7 +19,11 @@ sky = SubResource("Sky_feb5d")
 noise_type = 3
 seed = 2
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_feb5d"]
+resource_name = "ToolBarButtonGroup"
+
 [node name="Game" type="Node3D"]
+script = ExtResource("1_fc0e3")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e2o6t")
@@ -35,7 +40,7 @@ terrain = NodePath("../Terrain")
 [node name="SpectatorPlayer" parent="." instance=ExtResource("3_fc0e3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
-[node name="Control" type="Control" parent="."]
+[node name="GUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 582.0
@@ -43,7 +48,7 @@ offset_right = 582.0
 offset_bottom = 648.0
 mouse_filter = 1
 
-[node name="Container" type="BoxContainer" parent="Control"]
+[node name="Toolbar" type="BoxContainer" parent="GUI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -53,6 +58,14 @@ offset_right = 571.0
 offset_bottom = -9.695999
 alignment = 1
 
-[node name="Button" type="Button" parent="Control/Container"]
+[node name="PathButton" type="Button" parent="GUI/Toolbar"]
 layout_mode = 2
-text = "Draw path"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_feb5d")
+text = "Path"
+
+[node name="BuildingButton" type="Button" parent="GUI/Toolbar"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_feb5d")
+text = "Build"
