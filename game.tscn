@@ -18,7 +18,6 @@ sky_material = SubResource("ProceduralSkyMaterial_e2o6t")
 
 [sub_resource type="Environment" id="Environment_e2o6t"]
 background_mode = 2
-background_energy_multiplier = 3.0
 sky = SubResource("Sky_feb5d")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fc0e3"]
@@ -160,7 +159,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("6_j5wjh")
 theme_override_font_sizes/font_size = 32
-title = "Controls                      "
+title = "Controls                                  "
 
 [node name="Label" type="RichTextLabel" parent="GUI/FoldableContainer"]
 layout_direction = 2
