@@ -1,10 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://ced2jrk1yjub8"]
+[gd_scene load_steps=19 format=3 uid="uid://ced2jrk1yjub8"]
 
 [ext_resource type="PackedScene" uid="uid://ceu4i5mb70t0t" path="res://terrain/terrain.tscn" id="1_e2o6t"]
 [ext_resource type="Script" uid="uid://concelqgdcuex" path="res://game.gd" id="1_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://bne0hr8frhqmg" path="res://player/spectator_player.tscn" id="3_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://btlgkcr7sru8l" path="res://trees/pine_tree_filler.tscn" id="3_feb5d"]
+[ext_resource type="Script" uid="uid://xj1qw00tuieb" path="res://building_collection.gd" id="4_hve3p"]
 [ext_resource type="Script" uid="uid://bxss8j6k5ygf0" path="res://toolbar.gd" id="5_7jktm"]
+[ext_resource type="Script" uid="uid://ctq4bbtjvehup" path="res://gui.gd" id="5_vef74"]
 [ext_resource type="Texture2D" uid="uid://01v0q0d7mxyx" path="res://assets/pencil-fill.svg" id="6_eow3j"]
 [ext_resource type="FontFile" uid="uid://yi7y2wvyjqk0" path="res://assets/Inter-VariableFont_opsz,wght.ttf" id="6_j5wjh"]
 [ext_resource type="Texture2D" uid="uid://bbgesv3x8bo6d" path="res://assets/house-add-fill.svg" id="7_j5wjh"]
@@ -44,12 +46,13 @@ unicode = 49
 [sub_resource type="Shortcut" id="Shortcut_hve3p"]
 events = [SubResource("InputEventKey_vef74")]
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("player", "toolbar", "terrain", "pine_tree_filler")]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("player", "toolbar", "terrain", "pine_tree_filler", "building_collection")]
 script = ExtResource("1_fc0e3")
 player = NodePath("SpectatorPlayer")
 toolbar = NodePath("GUI/Toolbar")
 terrain = NodePath("WorldEnvironment/Terrain")
 pine_tree_filler = NodePath("WorldEnvironment/PineTreeFiller")
+building_collection = NodePath("WorldEnvironment/BuildingCollection")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e2o6t")
@@ -63,21 +66,24 @@ height = 20
 [node name="PineTreeFiller" parent="WorldEnvironment" node_paths=PackedStringArray("terrain") instance=ExtResource("3_feb5d")]
 terrain = NodePath("../Terrain")
 
-[node name="SpectatorPlayer" parent="." instance=ExtResource("3_fc0e3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+[node name="BuildingCollection" type="Node3D" parent="WorldEnvironment" node_paths=PackedStringArray("terrain")]
+script = ExtResource("4_hve3p")
+terrain = NodePath("../Terrain")
+metadata/_custom_type_script = "uid://xj1qw00tuieb"
 
-[node name="GUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
+[node name="SpectatorPlayer" parent="." instance=ExtResource("3_fc0e3")]
+transform = Transform3D(-4.3711385e-08, 0.17364818, -0.98480767, 0, 0.9848077, 0.17364816, 0.99999994, 7.590403e-09, -4.3047308e-08, -50, 10, 0)
+
+[node name="GUI" type="BoxContainer" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
-mouse_filter = 1
+size_flags_horizontal = 3
+script = ExtResource("5_vef74")
 
 [node name="Toolbar" type="BoxContainer" parent="GUI"]
-layout_mode = 0
-offset_top = 10.0
-offset_right = 1152.0
-offset_bottom = 64.0
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
 theme_override_constants/separation = 16
 alignment = 1
 script = ExtResource("5_7jktm")
@@ -109,7 +115,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_j5wjh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_7jktm")
 shortcut = SubResource("Shortcut_hve3p")
-text = "Path"
+text = "Draw Path"
 metadata/tool_bar_button_type = 0
 
 [node name="BuildButton" type="Button" parent="GUI/Toolbar"]
@@ -136,7 +142,7 @@ theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_j5wjh")
 theme_override_styles/focus = SubResource("StyleBoxFlat_j5wjh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_7jktm")
-text = "Build"
+text = "Build (on path)"
 metadata/tool_bar_button_type = 1
 
 [connection signal="gui_input" from="GUI" to="." method="_on_gui_input"]
