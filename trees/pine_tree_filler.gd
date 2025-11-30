@@ -1,5 +1,6 @@
 @tool
 extends Node3D
+class_name PineTreeFiller
 
 const PINE_TREE = preload("res://trees/pine_tree.tscn")
 
@@ -13,6 +14,16 @@ var tree_positions = SpatialHash.new(8.0)
 	set(new_terr):
 		terrain = new_terr
 		fill_pine_trees()
+
+func update_paths(paths: Array):
+	for tree in get_children():
+		var nearbyPath = paths.find_custom(func(path):
+			return path.find_custom(func(pos):
+				return tree.global_position.distance_squared_to(pos) < pow(4,2)
+			) >= 0
+		)
+		if (nearbyPath >= 0):
+			tree.visible = false
 
 func place_tree_or_not_if_feeling_like_it():
 	var minPos = terrain.size * -0.5 

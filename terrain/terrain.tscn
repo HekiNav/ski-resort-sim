@@ -1,19 +1,36 @@
-[gd_scene load_steps=6 format=3 uid="uid://ceu4i5mb70t0t"]
+[gd_scene load_steps=10 format=3 uid="uid://ceu4i5mb70t0t"]
 
 [ext_resource type="Shader" uid="uid://d24kxyq7ycgj3" path="res://terrain/terrain.gdshader" id="1_0u6kl"]
 [ext_resource type="Script" uid="uid://bfvj7jlx4pqmq" path="res://terrain/terrain.gd" id="1_206su"]
+[ext_resource type="Script" uid="uid://caaxq64pecajg" path="res://terrain/canvas_layer.gd" id="3_2ilfp"]
 
 [sub_resource type="Gradient" id="Gradient_0u6kl"]
-colors = PackedColorArray(0.88, 0.85506666, 0.792, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0.8980392, 0.8980392, 0.80784315, 1, 0.81299466, 0.87589484, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_avahw"]
 gradient = SubResource("Gradient_0u6kl")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2ilfp"]
+noise_type = 3
+seed = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nigp7"]
+noise = SubResource("FastNoiseLite_2ilfp")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2ilfp"]
+viewport_path = NodePath("TextureViewport")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_avahw"]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_0u6kl")
-shader_parameter/height = 0.5
+shader_parameter/height = 16.0
+shader_parameter/size = 256.0
 shader_parameter/color_gradient = SubResource("GradientTexture1D_avahw")
+shader_parameter/normal_map = SubResource("NoiseTexture2D_nigp7")
+shader_parameter/path_texture = SubResource("ViewportTexture_2ilfp")
 
 [node name="Terrain" type="StaticBody3D"]
 script = ExtResource("1_206su")
@@ -24,3 +41,12 @@ unique_name_in_owner = true
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 material_override = SubResource("ShaderMaterial_avahw")
+
+[node name="TextureViewport" type="SubViewport" parent="."]
+unique_name_in_owner = true
+transparent_bg = true
+size = Vector2i(64, 64)
+
+[node name="CanvasLayer" type="Node2D" parent="TextureViewport"]
+unique_name_in_owner = true
+script = ExtResource("3_2ilfp")

@@ -22,12 +22,11 @@ seed = 2
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_7jktm"]
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("player", "toolbar", "terrain", "pine_tree_filler")]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("player", "toolbar", "terrain")]
 script = ExtResource("1_fc0e3")
 player = NodePath("SpectatorPlayer")
 toolbar = NodePath("GUI/Toolbar")
 terrain = NodePath("WorldEnvironment/Terrain")
-pine_tree_filler = NodePath("WorldEnvironment/PineTreeFiller")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e2o6t")
@@ -36,13 +35,13 @@ environment = SubResource("Environment_e2o6t")
 size = 128.0
 resolution = 128
 noise = SubResource("FastNoiseLite_fc0e3")
-height = 20
+height = 28
 
 [node name="PineTreeFiller" parent="WorldEnvironment" node_paths=PackedStringArray("terrain") instance=ExtResource("3_feb5d")]
 terrain = NodePath("../Terrain")
 
 [node name="SpectatorPlayer" parent="." instance=ExtResource("3_fc0e3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3

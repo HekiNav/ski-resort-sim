@@ -3,6 +3,8 @@ extends StaticBody3D
 class_name Terrain
 @onready var mesh_instance: MeshInstance3D = %MeshInstance3D
 @onready var collision_shape: CollisionShape3D = %CollisionShape3D
+@onready var texture_viewport: SubViewport = %TextureViewport
+@onready var canvas_layer: CanvasLayerCustom = %CanvasLayer
 
 var array_mesh
 
@@ -76,13 +78,16 @@ func _ready() -> void:
 	apply_mesh()
 
 func update_paths(paths):
-	mesh_instance.material_override.set_shader_parameter("paths",paths)
-
+	canvas_layer.update_paths(paths)
+	
 func apply_mesh():
+	texture_viewport.size = Vector2(size*8,size*8)
+	
 	mesh_instance.mesh = array_mesh
 	
 	var collision_mesh = mesh_instance.mesh.create_trimesh_shape()
 	
 	collision_shape.shape = collision_mesh
 	
-	mesh_instance.material_override.set_shader_parameter("height",0.5)
+	mesh_instance.material_override.set_shader_parameter("height",height*2)
+	mesh_instance.material_override.set_shader_parameter("size",size)
