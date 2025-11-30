@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ced2jrk1yjub8"]
+[gd_scene load_steps=21 format=3 uid="uid://ced2jrk1yjub8"]
 
 [ext_resource type="PackedScene" uid="uid://ceu4i5mb70t0t" path="res://terrain/terrain.tscn" id="1_e2o6t"]
 [ext_resource type="Script" uid="uid://concelqgdcuex" path="res://game.gd" id="1_fc0e3"]
@@ -46,6 +46,14 @@ unicode = 49
 [sub_resource type="Shortcut" id="Shortcut_hve3p"]
 events = [SubResource("InputEventKey_vef74")]
 
+[sub_resource type="InputEventKey" id="InputEventKey_hve3p"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_mfdv2"]
+events = [SubResource("InputEventKey_hve3p")]
+
 [node name="Game" type="Node3D" node_paths=PackedStringArray("player", "toolbar", "terrain", "pine_tree_filler", "building_collection")]
 script = ExtResource("1_fc0e3")
 player = NodePath("SpectatorPlayer")
@@ -74,7 +82,7 @@ metadata/_custom_type_script = "uid://xj1qw00tuieb"
 [node name="SpectatorPlayer" parent="." instance=ExtResource("3_fc0e3")]
 transform = Transform3D(-4.3711385e-08, 0.17364818, -0.98480767, 0, 0.9848077, 0.17364816, 0.99999994, 7.590403e-09, -4.3047308e-08, -50, 10, 0)
 
-[node name="GUI" type="BoxContainer" parent="."]
+[node name="GUI" type="Container" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
 size_flags_horizontal = 3
@@ -142,7 +150,31 @@ theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_j5wjh")
 theme_override_styles/focus = SubResource("StyleBoxFlat_j5wjh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_7jktm")
+shortcut = SubResource("Shortcut_mfdv2")
 text = "Build (on path)"
 metadata/tool_bar_button_type = 1
+
+[node name="FoldableContainer" type="FoldableContainer" parent="GUI"]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("6_j5wjh")
+theme_override_font_sizes/font_size = 32
+title = "Controls                      "
+
+[node name="Label" type="RichTextLabel" parent="GUI/FoldableContainer"]
+layout_direction = 2
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[img=48]res://assets/input-icons/T_1_Key_White.png[/img] Mode: Draw path
+[img=48]res://assets/input-icons/T_2_Key_White.png[/img] Mode: Build
+[img=48]res://assets/input-icons/T_Mouse_Left_Key_White.png[/img] Draw path/place building
+[img=48]res://assets/input-icons/T_Mouse_Right_Key_White.png[/img] Look around
+[img=48]res://assets/input-icons/T_W_key_White.png[/img][img=48]res://assets/input-icons/T_A_key_White.png[/img][img=48]res://assets/input-icons/T_S_key_White.png[/img][img=48]res://assets/input-icons/T_D_key_White.png[/img] Move
+[img=48]res://assets/input-icons/T_Mouse_Scroll_Key_Dark_Key_White.png[/img] Adjust movement speed
+"
+fit_content = true
+scroll_active = false
 
 [connection signal="gui_input" from="GUI" to="." method="_on_gui_input"]
