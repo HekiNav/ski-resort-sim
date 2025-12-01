@@ -7,4 +7,3 @@ Still very incomplete, only includes basic things like terrain and tree generati
 - Path creation and rendering with shaders
 - Building placement
 - Camera movement
-

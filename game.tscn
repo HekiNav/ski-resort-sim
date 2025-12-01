@@ -18,6 +18,7 @@ sky_material = SubResource("ProceduralSkyMaterial_e2o6t")
 
 [sub_resource type="Environment" id="Environment_e2o6t"]
 background_mode = 2
+background_energy_multiplier = 3.0
 sky = SubResource("Sky_feb5d")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fc0e3"]
